@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <html lang="en"></html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/mainstyle.css">
+        <title>Reuben's Loginporium</title>
+    </head>
+    <body>
+        <header>
+        <nav>
+            <ul>
+                <li class="topNav"><a href="{% url 'home' %}">Home</a></li>
+                <li class="topNav"><a href="{% url 'home' %}#Port">Portfolio</a></li>
+                <li class="topNav"><a href="{% url 'home' %}#Requests">Requests</a></li>
+                <li class="topNav"><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+        </header>
+        <div class="divide">=============================</div>
+        <h1>Welcome to the <div class="title">Login Page</div></h1>
+        <div class="divide">=============================</div>
+        <h2 class="loginCred"><label for="Username">Username: </label><input type="text" class="Username" id="Username", name="Username"></h2>
+        <h2 class="loginCred"><label for="Password">Password: </label><input type="text" class="Username" id="Username", name="Username"></h2>
+        <div class="divide">=============================</div>
+    </body>
+</html>

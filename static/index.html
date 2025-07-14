@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="static/mainstyle.css">
+        <title>Reuben's Emporium</title>
+    </head>
+    <body>
+        <header>
+        <nav>
+            <ul>
+                <li class="topNav"><a href="index.html">Home</a></li>
+                <li class="topNav"><a href="#Port">Portfolio</a></li>
+                <li class="topNav"><a href="#Requests">Requests</a></li>
+                <li class="topNav"><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+        </header>
+        <div class="divide">=============================</div>
+        <h1>Welcome to <div class="title">Reuben's Emporium</div></h1>
+        <div id='startButton' class="divide">=============================</div>
+        <div class="mainBody">About Me:</div>
+        <div class="about">Hello! My name is Reuben Winfrey, I am an aspiring IT student and beginner developer. I'm 20 years old and mostly have experience in retail work, my programming experience so far is in Python, HTML/CSS, JavaScript, and C.</div>
+        <div class="divide" id="Port">=============================</div>
+        <div class="Portfolio">Portfolio:</div>
+        <div class="portContent">
+            {% for completeProject in projects %}
+                <h3>{{completeProject.projectName}}</h2>
+                <p>{{completeProject.projectDescription}}</p>
+                <img class = projectImage src="{{ completeProject.projectMedia.url }}" alt="{{ completeProject.projectName }}"/>
+                <small>Posted: {{completeProject.projectDate}}</small>
+            {%endfor%}
+        </div>
+        <div class="divide">=============================</div>
+        <footer id="Requests"><label for="emailMessage">Enter a request:</label><input class="emailMessage" type="text" id="emailMessage" name="emailMessage"></footer>
+        <script>
+            document.getElementById("startButton").addEventListener("click", () => {
+                window.open("breakout.html")
+            })
+        </script>
+    </body>
+</html>

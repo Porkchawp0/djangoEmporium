@@ -1,0 +1,75 @@
+import random
+from datetime import date
+import psycopg2
+
+try:
+    conn = psycopg2.connect(
+        dbname="userdatabase",
+        user="avguser",
+        password="blegh3",
+        host="localhost",
+        port="5432"
+    )
+    print("Connected Succesfully")
+except:
+    print(f"Error connecting")
+cur = conn.cursor()
+
+idList = []
+
+def createUniqueID(idList):
+    id = random.randint(11111, 99999)
+    while True:
+        if id in idList:
+            id = random.randint(11111, 99999)
+            print(f"id found in list, assigning new id to {id}")
+        else:
+            idList.append(id)
+            print(f"solid, added to list. your ID is {id}")
+            break
+    return id
+
+def createTables(conn, cur):
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS LoginInfo (
+        idNum INTEGER PRIMARY KEY,
+        userName varchar(20) NOT NULL,
+        password varchar(20) NOT NULL,
+        email varchar(30) NOT NULL,
+        joinDate varchar(10)
+    )""")
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS AchievementList (
+        idNum INTEGER,
+        breakOutCompletion BOOLEAN,
+        platformCompletion BOOLEAN,
+        aimTrainCompletion BOOLEAN          
+    )""")
+    conn.commit()
+
+def fillTables(conn, cur, idList):
+    idNum = createUniqueID(idList)
+    userName = input("Please enter a username: ")
+    email = input("Please enter an email for this account: ")
+    password = input(f"Please enter a password for account {userName} with ID {idNum}: ")
+    joinDate = str(date.today())
+
+    loginInfoSQL = "INSERT INTO userdata.LoginInfo (idNum, userName, password, email, joinDate) VALUES (%s, %s, %s, %s, %s);"
+    cur.execute(loginInfoSQL, (idNum, userName, password, email, joinDate))
+
+
+    #cur.execute("INSERT INTO LoginInfo (idNum, userName, password, email, joinDate) VALUES (:idNum, :userName, :password, :email, :joinDate)",
+    #    {'idNum': idNum, 'userName': userName, 'password': password, 'email': email, 'joinDate': joinDate})
+    #cur.execute("INSERT INTO AchievementList (idNum, breakOutCompletion, platformCompletion, aimTrainCompletion) VALUES (:idNum, :break, :plat, :aim)",
+    #        {'idNum': idNum, 'break': False, 'plat': False, 'aim': False})
+    conn.commit()
+    pass
+
+def dropTables(conn, cur):
+    cur.execute('DROP TABLE LoginInfo')
+    cur.execute('DROP TABLE AchievementList')
+    conn.commit()
+
+#dropTables(conn, cur)
+#createTables(conn, cur)
+fillTables(conn, cur, idList)
